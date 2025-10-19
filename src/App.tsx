@@ -22,7 +22,7 @@ const App = () => {
 
         <div
           ref={boxRef}
-          className="w-24 h-24 bg-yellow-400 rounded-lg shadow-2xl mx-auto"
+          className="w-24 h-24 bg-gradient-to-br from-yellow-500 to-red-500 rounded-lg shadow-2xl mx-auto"
         />
 
         <p className="text-white text-xl mt-8">see the box moving</p>
