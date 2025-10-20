@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { Header } from "./components/Header";
+import { Footer } from "./components/Footer";
 
 const App = () => {
   const boxRef = useRef(null);
@@ -22,9 +23,7 @@ const App = () => {
         <Header />
       </div>
 
-      <footer>
-        <p className="footer">footer content</p>
-      </footer>
+      <Footer />
     </div>
     // <div className="min-h-screen bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
     //   <div className="text-center">
