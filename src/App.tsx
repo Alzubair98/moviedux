@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
+import { MoviesGrid } from "./components/MoviesGrid";
 
 const App = () => {
   const boxRef = useRef(null);
@@ -21,6 +22,7 @@ const App = () => {
     <div className="App">
       <div className="container">
         <Header />
+        <MoviesGrid />
       </div>
 
       <Footer />
