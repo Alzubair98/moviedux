@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import type { Movie } from "../types/movie";
 
 export const MoviesGrid = () => {
-  const [movies, setMovies] = useState<[]>([]);
+  const [movies, setMovies] = useState<Movie[]>([]);
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -20,7 +21,7 @@ export const MoviesGrid = () => {
   return (
     <div className="movies-grid">
       {movies.map((movie) => (
-        <div key={movie.id} className="movie-card">
+        <div key={movie.id} className="movie-card cursor-pointer">
           <img src={`images/${movie.image}`} alt={movie.title} />
           <div className="movie-card-info">
             <h3 className="movie-card-title">{movie.title}</h3>
