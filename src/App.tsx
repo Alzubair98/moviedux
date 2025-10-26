@@ -1,44 +1,31 @@
-import { useEffect, useRef } from "react";
-import { gsap } from "gsap";
+import { useEffect, useState } from "react";
+
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
 import { MoviesGrid } from "./components/MoviesGrid";
+import { CinematicLoader } from "./components/CinmaticLoader";
 
 const App = () => {
-  const boxRef = useRef(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    gsap.to(boxRef.current, {
-      x: -300,
-      rotation: -360,
-      duration: 2,
-      repeat: -1,
-      yoyo: true,
-      ease: "power2.inOut",
-    });
+    setTimeout(() => setIsLoading(false), 1800);
   }, []);
 
   return (
-    <div className="App">
-      <div className="container">
-        <Header />
-        <MoviesGrid />
-      </div>
+    <>
+      <CinematicLoader isLoading={isLoading} />
+      {!isLoading && (
+        <div className="App">
+          <div className="container">
+            <Header />
+            <MoviesGrid />
+          </div>
 
-      <Footer />
-    </div>
-    // <div className="min-h-screen bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
-    //   <div className="text-center">
-    //     <h1 className="text-6xl font-bold text-white mb-8">React 19 + GSAP</h1>
-
-    //     <div
-    //       ref={boxRef}
-    //       className="w-24 h-24 bg-gradient-to-br from-yellow-500 to-red-500 rounded-lg shadow-2xl mx-auto"
-    //     />
-
-    //     <p className="text-white text-xl mt-8">see the box moving</p>
-    //   </div>
-    // </div>
+          <Footer />
+        </div>
+      )}
+    </>
   );
 };
 
