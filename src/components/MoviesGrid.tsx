@@ -1,7 +1,10 @@
-import { useState, useEffect } from "react";
+import { lazy, Suspense, useState, useEffect } from "react";
 import axios from "axios";
 import type { Movie } from "../types/movie";
-import { MovieCard } from "./MovieCard";
+import { motion } from "framer-motion";
+import { Loader } from "./loader";
+// lazy loading
+const MovieCard = lazy(() => import("./MovieCard"));
 
 export const MoviesGrid = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -20,10 +23,19 @@ export const MoviesGrid = () => {
   }, []);
 
   return (
-    <div className="movies-grid">
-      {movies.map((movie) => (
-        <MovieCard movie={movie} key={movie.id} />
-      ))}
-    </div>
+    <Suspense fallback={<Loader />}>
+      <div className="movies-grid">
+        {movies.map((movie) => (
+          <motion.div
+            key={movie.id}
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.3 }}
+          >
+            <MovieCard movie={movie} />
+          </motion.div>
+        ))}
+      </div>
+    </Suspense>
   );
 };
