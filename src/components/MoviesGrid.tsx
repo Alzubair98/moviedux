@@ -44,6 +44,17 @@ export const MoviesGrid = () => {
     setRating(e.currentTarget.value);
   };
 
+  const matchesGenre = (movie, genre: string) => {
+    return (
+      genre === "All Genres" ||
+      movie.genre.toLowerCase() === genre.toLowerCase()
+    );
+  };
+
+  const matchesSearchTerm = (movie, searchTerm: string) => {
+    return movie.title.toLowerCase().includes(searchTerm.toLowerCase());
+  };
+
   return (
     <>
       <Suspense fallback={<Loader />}>
