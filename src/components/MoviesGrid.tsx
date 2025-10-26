@@ -1,4 +1,5 @@
 import { lazy, Suspense, useState, useEffect } from "react";
+import type { ChangeEvent } from "react";
 import axios from "axios";
 import type { Movie } from "../types/movie";
 import { motion } from "framer-motion";
@@ -27,6 +28,14 @@ export const MoviesGrid = () => {
     fetchMovies();
   }, []);
 
+  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.currentTarget.value);
+  };
+
+  const filteredMovies = movies.filter((movie) =>
+    movie.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <>
       <CinematicLoader isLoading={isLoading} />
@@ -37,9 +46,11 @@ export const MoviesGrid = () => {
               className="search-input"
               placeholder="Search movies..."
               type="text"
+              value={searchTerm}
+              onChange={handleSearchChange}
             />
             <div className="movies-grid">
-              {movies.map((movie) => (
+              {filteredMovies.map((movie) => (
                 <motion.div
                   key={movie.id}
                   initial={{ opacity: 0, scale: 0.95 }}
