@@ -32,8 +32,39 @@ export const MoviesGrid = () => {
     setSearchTerm(e.currentTarget.value);
   };
 
-  const filteredMovies = movies.filter((movie) =>
-    movie.title.toLowerCase().includes(searchTerm.toLowerCase())
+  const matchesGenre = (movie: Movie, genre: string) => {
+    return (
+      genre === "All Genres" ||
+      movie.genre.toLowerCase() === genre.toLowerCase()
+    );
+  };
+
+  const matchesSearchTerm = (movie: Movie, searchTerm: string) => {
+    return movie.title.toLowerCase().includes(searchTerm.toLowerCase());
+  };
+
+  const matchRating = (movie: Movie, rating: string) => {
+    switch (rating) {
+      case "All":
+        return true;
+
+      case "Good":
+        return parseInt(movie.rating) >= 8;
+      case "Ok":
+        return parseInt(movie.rating) >= 5 && parseInt(movie.rating) < 8;
+      case "Bad":
+        return parseInt(movie.rating) < 5;
+
+      default:
+        return false;
+    }
+  };
+
+  const filteredMovies = movies.filter(
+    (movie) =>
+      matchesGenre(movie, genre) &&
+      matchRating(movie, rating) &&
+      matchesSearchTerm(movie, searchTerm)
   );
 
   const handleGenreChange = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -42,17 +73,6 @@ export const MoviesGrid = () => {
 
   const handleRatingChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setRating(e.currentTarget.value);
-  };
-
-  const matchesGenre = (movie, genre: string) => {
-    return (
-      genre === "All Genres" ||
-      movie.genre.toLowerCase() === genre.toLowerCase()
-    );
-  };
-
-  const matchesSearchTerm = (movie, searchTerm: string) => {
-    return movie.title.toLowerCase().includes(searchTerm.toLowerCase());
   };
 
   return (
