@@ -3,6 +3,7 @@ import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
 import { MoviesGrid } from "./components/MoviesGrid";
 import { CinematicLoader } from "./components/CinmaticLoader";
+import { WatchList } from "./components/Watchlist";
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -19,6 +20,7 @@ const App = () => {
           <div className="container">
             <Header />
             <MoviesGrid />
+            <WatchList />
           </div>
 
           <Footer />
