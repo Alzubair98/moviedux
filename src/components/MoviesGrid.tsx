@@ -1,4 +1,4 @@
-import { lazy, Suspense, useState, useEffect } from "react";
+import { lazy, Suspense, useState, useEffect, useMemo } from "react";
 import type { ChangeEvent } from "react";
 import axios from "axios";
 import type { Movie } from "../types/movie";
@@ -60,12 +60,14 @@ export const MoviesGrid = () => {
     }
   };
 
-  const filteredMovies = movies.filter(
-    (movie) =>
-      matchesGenre(movie, genre) &&
-      matchRating(movie, rating) &&
-      matchesSearchTerm(movie, searchTerm)
-  );
+  const filteredMovies = useMemo(() => {
+    return movies.filter(
+      (movie) =>
+        matchesGenre(movie, genre) &&
+        matchRating(movie, rating) &&
+        matchesSearchTerm(movie, searchTerm)
+    );
+  }, [movies, genre, rating, searchTerm]);
 
   const handleGenreChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setGenre(e.currentTarget.value);
