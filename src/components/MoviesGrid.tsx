@@ -1,4 +1,11 @@
-import { lazy, Suspense, useState, useEffect, useMemo } from "react";
+import {
+  lazy,
+  Suspense,
+  useState,
+  useEffect,
+  useMemo,
+  useCallback,
+} from "react";
 import type { ChangeEvent } from "react";
 import axios from "axios";
 import type { Movie } from "../types/movie";
@@ -32,16 +39,18 @@ export const MoviesGrid = () => {
     setSearchTerm(e.currentTarget.value);
   };
 
-  const matchesGenre = (movie: Movie, genre: string) => {
-    return (
+  const matchesGenre = useCallback(
+    (movie: Movie, genre: string) =>
       genre === "All Genres" ||
-      movie.genre.toLowerCase() === genre.toLowerCase()
-    );
-  };
+      movie.genre.toLowerCase() === genre.toLowerCase(),
+    []
+  );
 
-  const matchesSearchTerm = (movie: Movie, searchTerm: string) => {
-    return movie.title.toLowerCase().includes(searchTerm.toLowerCase());
-  };
+  const matchesSearchTerm = useCallback(
+    (movie: Movie, searchTerm: string) =>
+      movie.title.toLowerCase().includes(searchTerm.toLowerCase()),
+    []
+  );
 
   const matchRating = (movie: Movie, rating: string) => {
     switch (rating) {
@@ -78,61 +87,59 @@ export const MoviesGrid = () => {
   };
 
   return (
-    <>
-      <Suspense fallback={<Loader />}>
-        <div>
-          <input
-            className="search-input"
-            placeholder="Search movies..."
-            type="text"
-            value={searchTerm}
-            onChange={handleSearchChange}
-          />
+    <Suspense fallback={<Loader />}>
+      <div>
+        <input
+          className="search-input"
+          placeholder="Search movies..."
+          type="text"
+          value={searchTerm}
+          onChange={handleSearchChange}
+        />
 
-          <div className="filter-bar">
-            <div className="filter-slot cursor-pointer">
-              <label className="cursor-pointer">Genre</label>
-              <select
-                className="filter-dropdown"
-                value={genre}
-                onChange={handleGenreChange}
-              >
-                <option>All Genres</option>
-                <option>Action</option>
-                <option>Drama</option>
-                <option>Fantasy</option>
-                <option>Horror</option>
-              </select>
-            </div>
-
-            <div className="filter-slot cursor-pointer">
-              <label className="cursor-pointer">Rating</label>
-              <select
-                className="filter-dropdown"
-                value={rating}
-                onChange={handleRatingChange}
-              >
-                <option>All</option>
-                <option>Good</option>
-                <option>Ok</option>
-                <option>Bad</option>
-              </select>
-            </div>
+        <div className="filter-bar">
+          <div className="filter-slot cursor-pointer">
+            <label className="cursor-pointer">Genre</label>
+            <select
+              className="filter-dropdown"
+              value={genre}
+              onChange={handleGenreChange}
+            >
+              <option>All Genres</option>
+              <option>Action</option>
+              <option>Drama</option>
+              <option>Fantasy</option>
+              <option>Horror</option>
+            </select>
           </div>
-          <div className="movies-grid">
-            {filteredMovies.map((movie) => (
-              <motion.div
-                key={movie.id}
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.3 }}
-              >
-                <MovieCard movie={movie} />
-              </motion.div>
-            ))}
+
+          <div className="filter-slot cursor-pointer">
+            <label className="cursor-pointer">Rating</label>
+            <select
+              className="filter-dropdown"
+              value={rating}
+              onChange={handleRatingChange}
+            >
+              <option>All</option>
+              <option>Good</option>
+              <option>Ok</option>
+              <option>Bad</option>
+            </select>
           </div>
         </div>
-      </Suspense>
-    </>
+        <div className="movies-grid">
+          {filteredMovies.map((movie) => (
+            <motion.div
+              key={movie.id}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.3 }}
+            >
+              <MovieCard movie={movie} />
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </Suspense>
   );
 };
