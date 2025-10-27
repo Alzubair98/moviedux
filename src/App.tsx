@@ -5,6 +5,7 @@ import { MoviesGrid } from "./components/MoviesGrid";
 import { CinematicLoader } from "./components/CinmaticLoader";
 import { WatchList } from "./components/Watchlist";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { PageWrapper } from "./components/pageWrapper/PageWrapper";
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -20,7 +21,7 @@ const App = () => {
         <div className="App">
           <div className="container">
             <Router>
-              <nav className="bg-gray-900 text-white py-3 shadow-md">
+              <nav className="text-white py-3 shadow-md">
                 <div className="container mx-auto flex justify-between items-center px-6">
                   <Link
                     to="/"
@@ -42,8 +43,22 @@ const App = () => {
               <Header />
 
               <Routes>
-                <Route path="/" element={<MoviesGrid />} />
-                <Route path="/WatchList" element={<WatchList />} />
+                <Route
+                  path="/"
+                  element={
+                    <PageWrapper>
+                      <MoviesGrid />
+                    </PageWrapper>
+                  }
+                />
+                <Route
+                  path="/WatchList"
+                  element={
+                    <PageWrapper>
+                      <WatchList />
+                    </PageWrapper>
+                  }
+                />
               </Routes>
             </Router>
           </div>
