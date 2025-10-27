@@ -52,7 +52,7 @@ export const MoviesGrid = () => {
     []
   );
 
-  const matchRating = (movie: Movie, rating: string) => {
+  const matchRating = useCallback((movie: Movie, rating: string) => {
     switch (rating) {
       case "All":
         return true;
@@ -67,7 +67,7 @@ export const MoviesGrid = () => {
       default:
         return false;
     }
-  };
+  }, []);
 
   const filteredMovies = useMemo(() => {
     return movies.filter(
@@ -76,7 +76,15 @@ export const MoviesGrid = () => {
         matchRating(movie, rating) &&
         matchesSearchTerm(movie, searchTerm)
     );
-  }, [movies, genre, rating, searchTerm]);
+  }, [
+    movies,
+    genre,
+    rating,
+    searchTerm,
+    matchRating,
+    matchesSearchTerm,
+    matchesGenre,
+  ]);
 
   const handleGenreChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setGenre(e.currentTarget.value);
