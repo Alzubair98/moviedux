@@ -1,13 +1,5 @@
-import {
-  lazy,
-  Suspense,
-  useState,
-  useEffect,
-  useMemo,
-  useCallback,
-} from "react";
+import { lazy, Suspense, useState, useMemo, useCallback } from "react";
 import type { ChangeEvent } from "react";
-import axios from "axios";
 import type { Movie } from "../types/movie";
 import { motion } from "framer-motion";
 import { Loader } from "./loader";
@@ -15,25 +7,11 @@ import { Loader } from "./loader";
 // lazy loading
 const MovieCard = lazy(() => import("./MovieCard"));
 
-export const MoviesGrid = () => {
-  const [movies, setMovies] = useState<Movie[]>([]);
+export const MoviesGrid = ({ movies }: { movies: Movie }) => {
   const [searchTerm, setSearchTerm] = useState<string>("");
 
   const [genre, setGenre] = useState("All Genres");
   const [rating, setRating] = useState("All");
-
-  useEffect(() => {
-    const fetchMovies = async () => {
-      try {
-        const response = await axios.get("movies.json");
-        setMovies(response.data);
-      } catch (error) {
-        console.log(error, "useEffect error");
-      }
-    };
-
-    fetchMovies();
-  }, []);
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.currentTarget.value);

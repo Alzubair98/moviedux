@@ -1,18 +1,29 @@
 import { useEffect, useState } from "react";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
-import { MoviesGrid } from "./components/MoviesGrid";
 import { CinematicLoader } from "./components/CinmaticLoader";
-import { WatchList } from "./components/Watchlist";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import { PageWrapper } from "./components/pageWrapper/PageWrapper";
+import { BrowserRouter as Router, Link } from "react-router-dom";
 import { AppRoutes } from "./routes/AppRoutes";
+import type { Movie } from "./types/movie";
+import axios from "axios";
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [movies, setMovies] = useState<Movie[]>([]);
 
   useEffect(() => {
     setTimeout(() => setIsLoading(false), 1800);
+
+    const fetchMovies = async () => {
+      try {
+        const response = await axios.get("movies.json");
+        setMovies(response.data);
+      } catch (error) {
+        console.log(error, "useEffect error");
+      }
+    };
+
+    fetchMovies();
   }, []);
 
   return (
@@ -43,7 +54,7 @@ const App = () => {
 
               <Header />
 
-              <AppRoutes />
+              <AppRoutes movies={movies} />
             </Router>
           </div>
 
