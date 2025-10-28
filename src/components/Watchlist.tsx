@@ -1,6 +1,5 @@
 import type { Movie } from "../types/movie";
 import MovieCard from "./MovieCard";
-import { PageWrapper } from "./pageWrapper/PageWrapper";
 
 export const WatchList = ({
   watchlist,
