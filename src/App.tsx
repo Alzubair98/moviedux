@@ -10,6 +10,7 @@ import axios from "axios";
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [movies, setMovies] = useState<Movie[]>([]);
+  const [watchlist, setWatchlist] = useState<number[]>([]);
 
   useEffect(() => {
     setTimeout(() => setIsLoading(false), 1800);
@@ -25,6 +26,14 @@ const App = () => {
 
     fetchMovies();
   }, []);
+
+  const toggleWatchlist = (movieId: number) => {
+    setWatchlist((prev) =>
+      prev.includes(movieId)
+        ? prev.filter((id) => id !== movieId)
+        : [...prev, movieId]
+    );
+  };
 
   return (
     <>
