@@ -7,7 +7,15 @@ import { Loader } from "./loader";
 // lazy loading
 const MovieCard = lazy(() => import("./MovieCard"));
 
-export const MoviesGrid = ({ movies }: { movies: Movie }) => {
+export const MoviesGrid = ({
+  movies,
+  watchlist,
+  toggleWatchlist,
+}: {
+  movies: Movie;
+  watchlist: number[];
+  toggleWatchlist: void;
+}) => {
   const [searchTerm, setSearchTerm] = useState<string>("");
 
   const [genre, setGenre] = useState("All Genres");
@@ -121,7 +129,12 @@ export const MoviesGrid = ({ movies }: { movies: Movie }) => {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.3 }}
             >
-              <MovieCard movie={movie} />
+              <MovieCard
+                movie={movie}
+                key={movie.id}
+                toggleWatchlist={toggleWatchlist}
+                isWatchlisted={watchlist.includes(movie.id)}
+              />
             </motion.div>
           ))}
         </div>

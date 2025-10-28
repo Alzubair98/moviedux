@@ -63,7 +63,11 @@ const App = () => {
 
               <Header />
 
-              <AppRoutes movies={movies} />
+              <AppRoutes
+                movies={movies}
+                watchlist={watchlist}
+                toggleWatchlist={toggleWatchlist}
+              />
             </Router>
           </div>
 

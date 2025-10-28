@@ -5,14 +5,26 @@ import { PageWrapper } from "../components/pageWrapper/PageWrapper";
 import { NotFound } from "../components/404/NotFound";
 import type { Movie } from "../types/movie";
 
-export const AppRoutes = ({ movies }: { movies: Movie }) => {
+export const AppRoutes = ({
+  movies,
+  watchlist,
+  toggleWatchlist,
+}: {
+  movies: Movie;
+  watchlist: number[];
+  toggleWatchlist: void;
+}) => {
   return (
     <Routes>
       <Route
         path="/"
         element={
           <PageWrapper>
-            <MoviesGrid movies={movies} />
+            <MoviesGrid
+              movies={movies}
+              watchlist={watchlist}
+              toggleWatchlist={toggleWatchlist}
+            />
           </PageWrapper>
         }
       />
@@ -20,7 +32,11 @@ export const AppRoutes = ({ movies }: { movies: Movie }) => {
         path="/WatchList"
         element={
           <PageWrapper>
-            <WatchList />
+            <WatchList
+              movies={movies}
+              watchlist={watchlist}
+              toggleWatchlist={toggleWatchlist}
+            />
           </PageWrapper>
         }
       />

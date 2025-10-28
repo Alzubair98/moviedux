@@ -1,7 +1,15 @@
 import type { Movie } from "../types/movie";
 import type { SyntheticEvent } from "react";
 
-const MovieCard = ({ movie }: { movie: Movie }) => {
+const MovieCard = ({
+  movie,
+  isWatchlisted,
+  toggleWatchlist,
+}: {
+  movie: Movie;
+  isWatchlisted: boolean;
+  toggleWatchlist: void;
+}) => {
   const handleError = (e: SyntheticEvent<HTMLImageElement>) => {
     e.currentTarget.src = "images/default.jpg";
   };
