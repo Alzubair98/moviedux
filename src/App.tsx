@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
 import { CinematicLoader } from "./components/CinmaticLoader";
@@ -27,13 +27,13 @@ const App = () => {
     fetchMovies();
   }, []);
 
-  const toggleWatchlist = (movieId: number) => {
+  const toggleWatchlist = useCallback((movieId: number) => {
     setWatchlist((prev) =>
       prev.includes(movieId)
         ? prev.filter((id) => id !== movieId)
         : [...prev, movieId]
     );
-  };
+  }, []);
 
   return (
     <>

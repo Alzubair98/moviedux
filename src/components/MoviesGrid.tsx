@@ -14,7 +14,7 @@ export const MoviesGrid = ({
 }: {
   movies: Movie;
   watchlist: number[];
-  toggleWatchlist: void;
+  toggleWatchlist: (movieId: number) => void;
 }) => {
   const [searchTerm, setSearchTerm] = useState<string>("");
 

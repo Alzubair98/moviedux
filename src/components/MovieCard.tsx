@@ -8,7 +8,7 @@ const MovieCard = ({
 }: {
   movie: Movie;
   isWatchlisted: boolean;
-  toggleWatchlist: void;
+  toggleWatchlist: (movieId: number) => void;
 }) => {
   const handleError = (e: SyntheticEvent<HTMLImageElement>) => {
     e.currentTarget.src = "images/default.jpg";
@@ -31,15 +31,29 @@ const MovieCard = ({
         loading="lazy"
       />
       <div className="movie-card-info">
-        <h3 className="movie-card-title">{movie.title}</h3>
-        <p className="movie-card-genre">{movie.genre}</p>
-        <p
-          className={`movie-card-rating ${getRatingClass(
-            parseInt(movie.rating)
-          )}`}
-        >
-          {movie.rating}
-        </p>
+        <div>
+          <h3 className="movie-card-title">{movie.title}</h3>
+          <span className="movie-card-genre">{movie.genre}</span>
+          <span
+            className={`movie-card-rating ${getRatingClass(
+              parseInt(movie.rating)
+            )}`}
+          >
+            {movie.rating}
+          </span>
+        </div>
+        <label className="switch">
+          <input
+            type="checkbox"
+            checked={isWatchlisted}
+            onChange={() => toggleWatchlist(movie.id)}
+          />
+          <span className="slider">
+            <span className="slider-label">
+              {isWatchlisted ? "in Watchlist" : "Add to Watchlist"}
+            </span>
+          </span>
+        </label>
       </div>
     </div>
   );

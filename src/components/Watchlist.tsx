@@ -7,7 +7,7 @@ export const WatchList = ({
 }: {
   watchlist: number[];
   movies: Movie;
-  toggleWatchlist: void;
+  toggleWatchlist: (movieId: number) => void;
 }) => {
   return (
     <div>

@@ -12,7 +12,7 @@ export const AppRoutes = ({
 }: {
   movies: Movie;
   watchlist: number[];
-  toggleWatchlist: void;
+  toggleWatchlist: (movieId: number) => void;
 }) => {
   return (
     <Routes>
