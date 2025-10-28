@@ -6,6 +6,7 @@ import { CinematicLoader } from "./components/CinmaticLoader";
 import { WatchList } from "./components/Watchlist";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { PageWrapper } from "./components/pageWrapper/PageWrapper";
+import { AppRoutes } from "./routes/AppRoutes";
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -42,24 +43,7 @@ const App = () => {
 
               <Header />
 
-              <Routes>
-                <Route
-                  path="/"
-                  element={
-                    <PageWrapper>
-                      <MoviesGrid />
-                    </PageWrapper>
-                  }
-                />
-                <Route
-                  path="/WatchList"
-                  element={
-                    <PageWrapper>
-                      <WatchList />
-                    </PageWrapper>
-                  }
-                />
-              </Routes>
+              <AppRoutes />
             </Router>
           </div>
 
