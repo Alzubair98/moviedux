@@ -1,5 +1,7 @@
 import type { Movie } from "../types/movie";
 import type { SyntheticEvent } from "react";
+import { useRef, useEffect } from "react";
+import gsap from "gsap";
 
 const MovieCard = ({
   movie,
@@ -10,6 +12,31 @@ const MovieCard = ({
   isWatchlisted: boolean;
   toggleWatchlist: (movieId: number) => void;
 }) => {
+  const heartRef = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    if (isWatchlisted) {
+      const tl = gsap.timeline();
+      tl.fromTo(
+        heartRef.current,
+        { scale: 0, opacity: 0 },
+        { scale: 1.3, opacity: 1, duration: 0.3, ease: "back.out(2)" }
+      )
+        .to(heartRef.current, {
+          scale: 1,
+          duration: 0.2,
+          ease: "power1.out",
+        })
+        .to(heartRef.current, {
+          opacity: 0,
+          y: -40,
+          duration: 0.6,
+          ease: "power2.in",
+          delay: 0.2,
+        });
+    }
+  }, [isWatchlisted]);
+
   const handleError = (e: SyntheticEvent<HTMLImageElement>) => {
     e.currentTarget.src = "images/default.jpg";
   };
@@ -24,6 +51,13 @@ const MovieCard = ({
 
   return (
     <div key={movie.id} className="movie-card cursor-pointer">
+      <span
+        ref={heartRef}
+        className="absolute left-1/2 top-10 -translate-x-1/2 text-4xl opacity-0 pointer-events-none select-none"
+      >
+        ❤️
+      </span>
+
       <img
         src={`images/${movie.image}`}
         alt={movie.title}
@@ -50,7 +84,7 @@ const MovieCard = ({
           />
           <span className="slider">
             <span className="slider-label">
-              {isWatchlisted ? "in Watchlist" : "Add to Watchlist"}
+              {isWatchlisted ? "In Watchlist ❤️" : "Add to Watchlist"}
             </span>
           </span>
         </label>
